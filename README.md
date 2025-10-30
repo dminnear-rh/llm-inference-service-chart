@@ -1,36 +1,32 @@
 # llm-inference-service
 
-![Version: 0.3.0](https://img.shields.io/badge/Version-0.3.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 0.1.0](https://img.shields.io/badge/AppVersion-0.1.0-informational?style=flat-square)
+![Version: 0.4.0](https://img.shields.io/badge/Version-0.4.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 0.1.0](https://img.shields.io/badge/AppVersion-0.1.0-informational?style=flat-square)
 
 Deploys a kserve-based inference service and runtime for use on RHOAI
 
 ## Values
 
-| Key                                        | Type   | Default                                                      | Description |
-| ------------------------------------------ | ------ | ------------------------------------------------------------ | ----------- |
-| dsc.initialize                             | bool   | `true`                                                       |             |
-| dsc.kserve.defaultDeploymentMode           | string | `"RawDeployment"`                                            |             |
-| dsc.kserve.rawDeploymentServiceConfig      | string | `"Headed"`                                                   |             |
-| externalSecret.create                      | bool   | `true`                                                       |             |
-| inferenceService.affinity                  | object | `{}`                                                         |             |
-| inferenceService.maxReplicas               | int    | `1`                                                          |             |
-| inferenceService.minReplicas               | int    | `1`                                                          |             |
-| inferenceService.name                      | string | `"cpu-inference-service"`                                    |             |
-| inferenceService.resources.limits.cpu      | string | `"8"`                                                        |             |
-| inferenceService.resources.limits.memory   | string | `"16Gi"`                                                     |             |
-| inferenceService.resources.requests.cpu    | string | `"4"`                                                        |             |
-| inferenceService.resources.requests.memory | string | `"8Gi"`                                                      |             |
-| inferenceService.tolerations               | object | `{}`                                                         |             |
-| model.downloader.image                     | string | `"registry.access.redhat.com/ubi10/python-312-minimal:10.0"` |             |
-| model.files[0]                             | string | `"mistral-7b-instruct-v0.2.Q5_0.gguf"`                       |             |
-| model.repository                           | string | `"TheBloke/Mistral-7B-Instruct-v0.2-GGUF"`                   |             |
-| model.storage.mountPath                    | string | `"/models"`                                                  |             |
-| servingRuntime.args[0]                     | string | `"--model"`                                                  |             |
-| servingRuntime.args[1]                     | string | `"/models/mistral-7b-instruct-v0.2.Q5_0.gguf"`               |             |
-| servingRuntime.image                       | string | `"ghcr.io/ggml-org/llama.cpp:server"`                        |             |
-| servingRuntime.modelFormat                 | string | `"llama.cpp"`                                                |             |
-| servingRuntime.name                        | string | `"cpu-runtime"`                                              |             |
-| servingRuntime.port                        | int    | `8080`                                                       |             |
+| Key                                        | Type   | Default                                                   | Description |
+| ------------------------------------------ | ------ | --------------------------------------------------------- | ----------- |
+| dsc.initialize                             | bool   | `true`                                                    |             |
+| dsc.kserve.defaultDeploymentMode           | string | `"RawDeployment"`                                         |             |
+| dsc.kserve.rawDeploymentServiceConfig      | string | `"Headed"`                                                |             |
+| externalSecret.create                      | bool   | `true`                                                    |             |
+| inferenceService.affinity                  | object | `{}`                                                      |             |
+| inferenceService.maxReplicas               | int    | `1`                                                       |             |
+| inferenceService.minReplicas               | int    | `1`                                                       |             |
+| inferenceService.name                      | string | `"cpu-inference-service"`                                 |             |
+| inferenceService.resources.limits.cpu      | string | `"4"`                                                     |             |
+| inferenceService.resources.limits.memory   | string | `"8Gi"`                                                   |             |
+| inferenceService.resources.requests.cpu    | string | `"2"`                                                     |             |
+| inferenceService.resources.requests.memory | string | `"4Gi"`                                                   |             |
+| inferenceService.tolerations               | object | `{}`                                                      |             |
+| servingRuntime.args[0]                     | string | `"--model"`                                               |             |
+| servingRuntime.args[1]                     | string | `"--model ibm-granite/granite-4.0-350m"`                  |             |
+| servingRuntime.image                       | string | `"public.ecr.aws/q9t5s3a7/vllm-cpu-release-repo:v0.10.2"` |             |
+| servingRuntime.modelFormat                 | string | `"huggingface"`                                           |             |
+| servingRuntime.name                        | string | `"cpu-runtime"`                                           |             |
+| servingRuntime.port                        | int    | `8080`                                                    |             |
 
 ## Required Secrets
 

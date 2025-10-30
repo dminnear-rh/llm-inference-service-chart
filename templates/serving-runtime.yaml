@@ -35,12 +35,12 @@ spec:
         - containerPort: {{ .Values.servingRuntime.port }}
           protocol: TCP
       volumeMounts:
-        - name: model-storage
-          mountPath: {{ .Values.model.storage.mountPath }}
+        - name: hf-home
+          mountPath: /tmp/hf_home
   multiModel: false
   supportedModelFormats:
     - autoSelect: true
       name: {{ .Values.servingRuntime.modelFormat }}
   volumes:
-    - name: model-storage
+    - name: hf-home
       emptyDir: {}

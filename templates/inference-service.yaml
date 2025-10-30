@@ -23,44 +23,6 @@ spec:
     tolerations:
       {{- toYaml . | nindent 6 }}
     {{- end }}
-    initContainers:
-      - name: model-downloader
-        image: {{ .Values.model.downloader.image }}
-        env:
-          - name: HF_TOKEN
-            valueFrom:
-              secretKeyRef:
-                name: huggingface-secret
-                key: token
-        volumeMounts:
-          - mountPath: {{ .Values.model.storage.mountPath }}
-            name: model-storage
-        command:
-          - "sh"
-          - "-c"
-          - |
-            set -e
-
-            REPO_ID="{{ .Values.model.repository }}"
-            MOUNT_PATH="{{ .Values.model.storage.mountPath }}"
-
-            echo "Installing huggingface_hub..."
-            pip install huggingface_hub
-
-            {{ range .Values.model.files }}
-            TARGET_FILE="{{ . }}"
-            TARGET_PATH="$MOUNT_PATH/$TARGET_FILE"
-
-            if [ -e "$TARGET_PATH" ]; then
-              echo "File '$TARGET_FILE' already exists at $TARGET_PATH. Skipping."
-            else
-              echo "Downloading '$TARGET_FILE' from repo $REPO_ID to $MOUNT_PATH..."
-
-              hf download "$REPO_ID" "$TARGET_FILE" --local-dir "$MOUNT_PATH" --token "$HF_TOKEN"
-
-              echo "Download of '$TARGET_FILE' complete."
-            fi
-            {{ end }}
     model:
       modelFormat:
         name: {{ .Values.servingRuntime.modelFormat }}

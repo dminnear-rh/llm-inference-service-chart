@@ -4,31 +4,22 @@ inferenceService:
   maxReplicas: 1
   resources:
     requests:
+      cpu: "2"
+      memory: 4Gi
+    limits:
       cpu: "4"
       memory: 8Gi
-    limits:
-      cpu: "8"
-      memory: 16Gi
   affinity: {}
   tolerations: {}
 
 servingRuntime:
   name: cpu-runtime
   port: 8080
-  image: ghcr.io/ggml-org/llama.cpp:server
-  modelFormat: llama.cpp
+  image: public.ecr.aws/q9t5s3a7/vllm-cpu-release-repo:v0.10.2
+  modelFormat: huggingface
   args:
     - --model
-    - /models/mistral-7b-instruct-v0.2.Q5_0.gguf
-
-model:
-  repository: TheBloke/Mistral-7B-Instruct-v0.2-GGUF
-  files:
-    - mistral-7b-instruct-v0.2.Q5_0.gguf
-  storage:
-    mountPath: /models
-  downloader:
-    image: registry.access.redhat.com/ubi10/python-312-minimal:10.0
+    - ibm-granite/granite-4.0-350m
 
 dsc:
   initialize: true
